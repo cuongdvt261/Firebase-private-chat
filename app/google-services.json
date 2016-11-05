@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "588213581500",
+    "firebase_url": "https://chatapp-2f48f.firebaseio.com",
+    "project_id": "chatapp-2f48f",
+    "storage_bucket": "chatapp-2f48f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588213581500:android:1363bea61ec69554",
+        "android_client_info": {
+          "package_name": "chatapp.work.cuongdvt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588213581500-ikigu555d5ahcarg323bdl93354mnaut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDleBOt1IpjOym6dEsY0QU6lzGeAKn85PM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588213581500:android:717b0c5e00e60dc3",
+        "android_client_info": {
+          "package_name": "chatapp.work.cuongdvt.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588213581500-ikigu555d5ahcarg323bdl93354mnaut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDleBOt1IpjOym6dEsY0QU6lzGeAKn85PM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
