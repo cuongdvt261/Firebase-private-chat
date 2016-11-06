@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Helper.Param;
+import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
-        mData.child(Param.getInstance().usernameOfEmail()).child("State").setValue("online");
+        mData.child("users")
+                .child(auth.getCurrentUser().getUid())
+                .setValue(new UserModel(Param.getInstance().usernameOfEmail(),
+                        auth.getCurrentUser().getUid(),
+                        true));
 
         setContentView(R.layout.activity_main);
 
@@ -57,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        mData.child(Param.getInstance().usernameOfEmail()).child("State").setValue("offline");
+        mData.child("users")
+                .child(auth.getCurrentUser().getUid())
+                .child("online")
+                .setValue(false);
     }
 
     @Override

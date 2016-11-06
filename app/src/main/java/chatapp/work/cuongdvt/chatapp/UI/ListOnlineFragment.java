@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -52,33 +53,46 @@ public class ListOnlineFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.chat_list_items, container, false);
         lstChat = (ListView) view.findViewById(R.id.lsvMenuItem);
-        chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
-        lstChat.setAdapter(chatAdapter);
+
+        ReceiveData();
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        lstOnline.clear();
+    private void onListClickItem() {
+        lstChat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListOnlineModel model = (ListOnlineModel) parent.getAdapter().getItem(position);
+                Intent intent = new Intent(getActivity(), ChatContent.class);
+                intent.putExtra("TO_USER", model.getUserName());
+                startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mData.addChildEventListener(new ChildEventListener() {
+    public void GetUpdate(DataSnapshot ds) {
+        lstOnline.add(new ListOnlineModel("ava_1",
+                Boolean.valueOf(ds.child("online").getValue().toString()) ? "online" : "offline",
+                ds.child("username").getValue().toString()));
+        if (lstOnline.size() > 0) {
+            chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
+            lstChat.setAdapter(chatAdapter);
+        } else {
+            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void ReceiveData() {
+        mData.child("users").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                lstOnline.add(new ListOnlineModel("ava_1",
-                        dataSnapshot.child("State").getValue().toString(),
-                        dataSnapshot.getKey().toString()));
-                chatAdapter.notifyDataSetChanged();
-                return;
+                GetUpdate(dataSnapshot);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                GetUpdate(dataSnapshot);
             }
 
             @Override
@@ -95,20 +109,7 @@ public class ListOnlineFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
         });
         onListClickItem();
-    }
-
-    private void onListClickItem() {
-        lstChat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ListOnlineModel model = (ListOnlineModel) parent.getAdapter().getItem(position);
-                Intent intent = new Intent(getActivity(), ChatContent.class);
-                intent.putExtra("TO_USER", model.getUserName());
-                startActivity(intent);
-            }
-        });
     }
 }

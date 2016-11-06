@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import chatapp.work.cuongdvt.chatapp.Helper.Param;
 import chatapp.work.cuongdvt.chatapp.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -74,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    mData.child(Param.getInstance().usernameOfEmail()).setValue(auth.getCurrentUser().getEmail());
                                     startActivity(intent);
                                     finish();
                                 }
