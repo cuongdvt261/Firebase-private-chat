@@ -83,6 +83,7 @@ public class ListOnlineFragment extends Fragment {
                 if (lstOnline.size() > 0) {
                     chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
                     lstChat.setAdapter(chatAdapter);
+                    chatAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
                 }

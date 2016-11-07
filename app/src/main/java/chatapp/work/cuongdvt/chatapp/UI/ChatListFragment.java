@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatListItemAdapter;
+import chatapp.work.cuongdvt.chatapp.Helper.Param;
 import chatapp.work.cuongdvt.chatapp.Model.ChatListModel;
+import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
 
 public class ChatListFragment extends Fragment {
@@ -30,6 +32,9 @@ public class ChatListFragment extends Fragment {
     private List<ChatListModel> list;
 
     private DatabaseReference mData;
+    private ChatListItemAdapter adapter;
+
+    private String chatWith = "";
 
     public ChatListFragment() {
     }
@@ -44,41 +49,42 @@ public class ChatListFragment extends Fragment {
                              Bundle savedInstanceState) {
         mData = FirebaseDatabase.getInstance().getReference();
         View view = inflater.inflate(R.layout.chat_list_items, container, false);
-        List<ChatListModel> items = GetListContent();
+        list = new ArrayList<>();
         lsvItems = (ListView) view.findViewById(R.id.lsvMenuItem);
-        lsvItems.setAdapter(new ChatListItemAdapter(getActivity(), items));
-        lsvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent iChat = new Intent(getActivity(), ChatContent.class);
-                startActivity(iChat);
-            }
-        });
         ReceiveData();
         return view;
     }
 
-    private List<ChatListModel> GetListContent() {
-        list = new ArrayList<>();
-        ChatListModel item_1 = new ChatListModel("Cuong", "ava_1", "Short Content 1 ...", "10 phut truoc");
-        ChatListModel item_2 = new ChatListModel("Van la Cuong", "ava_2", "Short Content 2 ...", "5 ngay truoc");
-        ChatListModel item_3 = new ChatListModel("Chinh la Cuong", "ava_3", "Short Content 3 ...", "20/10/2016");
-        ChatListModel item_4 = new ChatListModel("Khong phai Cuong", "ava_4", "Short Content 4 ...", "22/10/2016");
-
-        list.add(item_1);
-        list.add(item_2);
-        list.add(item_3);
-        list.add(item_4);
-
-        return list;
+    private void GetData(DataSnapshot ds) {
+        if (ds.getKey().split("_")[0].toString().equals(Param.getInstance().usernameOfEmail())) {
+            chatWith = ds.getKey().split("_")[1].toString();
+            Message m = new Message();
+            for (DataSnapshot data :
+                    ds.getChildren()) {
+                m = data.getValue(Message.class);
+            }
+            list.add(new ChatListModel(m.getSender(), m.getAvaName(), m.getMessage(), "08/11/2016"));
+            if (list.size() > 0) {
+                adapter = new ChatListItemAdapter(getActivity(), list);
+                lsvItems.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
-
-    private void GetData(DataSnapshot ds) {
+    private void onListClickItem() {
+        lsvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ChatContent.class);
+                intent.putExtra("TO_USER", chatWith);
+                startActivity(intent);
+            }
+        });
     }
 
     private void ReceiveData() {
-        mData.addChildEventListener(new ChildEventListener() {
+        mData.child("messages").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 GetData(dataSnapshot);
@@ -104,5 +110,6 @@ public class ChatListFragment extends Fragment {
 
             }
         });
+        onListClickItem();
     }
 }

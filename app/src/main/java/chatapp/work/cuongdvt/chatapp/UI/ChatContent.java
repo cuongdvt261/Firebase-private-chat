@@ -1,6 +1,7 @@
 package chatapp.work.cuongdvt.chatapp.UI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -154,6 +155,7 @@ public class ChatContent extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(toUser);
+        toolbar.setTitleTextColor(Color.WHITE);
 
         listMsg = (ListView) findViewById(R.id.list_view_messages);
         edtInput = (EditText) findViewById(R.id.inputMsg);
