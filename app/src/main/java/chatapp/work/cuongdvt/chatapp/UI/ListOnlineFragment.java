@@ -22,6 +22,7 @@ import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatStatusAdapter;
 import chatapp.work.cuongdvt.chatapp.Model.ListOnlineModel;
+import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
 
 /**
@@ -71,20 +72,26 @@ public class ListOnlineFragment extends Fragment {
     }
 
     public void GetUpdate(DataSnapshot ds) {
-        lstOnline.add(new ListOnlineModel("ava_1",
-                Boolean.valueOf(ds.child("online").getValue().toString()) ? "online" : "offline",
-                ds.child("username").getValue().toString()));
-        if (lstOnline.size() > 0) {
-            chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
-            lstChat.setAdapter(chatAdapter);
-        } else {
-            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+        lstOnline.clear();
+        if (ds.getKey() == "users") {
+            for (DataSnapshot data :
+                    ds.getChildren()) {
+                UserModel um = data.getValue(UserModel.class);
+                lstOnline.add(new ListOnlineModel("ava_1",
+                        um.isOnline() ? "online" : "offline",
+                        um.getUsername()));
+                if (lstOnline.size() > 0) {
+                    chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
+                    lstChat.setAdapter(chatAdapter);
+                } else {
+                    Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+                }
+            }
         }
-
     }
 
     public void ReceiveData() {
-        mData.child("users").addChildEventListener(new ChildEventListener() {
+        mData.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 GetUpdate(dataSnapshot);
@@ -97,12 +104,12 @@ public class ListOnlineFragment extends Fragment {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                GetUpdate(dataSnapshot);
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                GetUpdate(dataSnapshot);
             }
 
             @Override
