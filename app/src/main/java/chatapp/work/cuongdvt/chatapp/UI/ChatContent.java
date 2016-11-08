@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,23 +88,25 @@ public class ChatContent extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDatabase
-                        .child("messages")
-                        .child(fromUser + "_" + toUser)
-                        .push()
-                        .setValue(new Message(edtInput.getText().toString(),
-                                true,
-                                fromUser,
-                                "ava_1"));
-                mDatabase
-                        .child("messages")
-                        .child(toUser + "_" + fromUser)
-                        .push()
-                        .setValue(new Message(edtInput.getText().toString(),
-                                false,
-                                fromUser,
-                                "ava_1"));
-                edtInput.setText("");
+                if (!TextUtils.isEmpty(edtInput.getText().toString())) {
+                    mDatabase
+                            .child("messages")
+                            .child(fromUser + "_" + toUser)
+                            .push()
+                            .setValue(new Message(edtInput.getText().toString(),
+                                    true,
+                                    fromUser,
+                                    "ava_1"));
+                    mDatabase
+                            .child("messages")
+                            .child(toUser + "_" + fromUser)
+                            .push()
+                            .setValue(new Message(edtInput.getText().toString(),
+                                    false,
+                                    fromUser,
+                                    "ava_1"));
+                    edtInput.setText("");
+                }
             }
         });
     }

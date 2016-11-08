@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +35,7 @@ public class ChatListFragment extends Fragment {
     private DatabaseReference mData;
     private ChatListItemAdapter adapter;
 
-    private String chatWith = "";
+    private ArrayList<String> arrToUser;
 
     public ChatListFragment() {
     }
@@ -50,24 +51,27 @@ public class ChatListFragment extends Fragment {
         mData = FirebaseDatabase.getInstance().getReference();
         View view = inflater.inflate(R.layout.chat_list_items, container, false);
         list = new ArrayList<>();
+        arrToUser = new ArrayList<>();
         lsvItems = (ListView) view.findViewById(R.id.lsvMenuItem);
         ReceiveData();
         return view;
     }
 
     private void GetData(DataSnapshot ds) {
+        Message msg = new Message();
         if (ds.getKey().split("_")[0].toString().equals(Param.getInstance().usernameOfEmail())) {
-            chatWith = ds.getKey().split("_")[1].toString();
-            Message m = new Message();
+            list.clear();
             for (DataSnapshot data :
                     ds.getChildren()) {
-                m = data.getValue(Message.class);
+                msg = data.getValue(Message.class);
             }
-            list.add(new ChatListModel(m.getSender(), m.getAvaName(), m.getMessage(), "08/11/2016"));
+            list.add(new ChatListModel(msg.getSender(), msg.getAvaName(), msg.getMessage(), "08/11/2016"));
             if (list.size() > 0) {
                 adapter = new ChatListItemAdapter(getActivity(), list);
                 lsvItems.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -77,7 +81,7 @@ public class ChatListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ChatContent.class);
-                intent.putExtra("TO_USER", chatWith);
+                //intent.putExtra("TO_USER", arrToUser.get(position));
                 startActivity(intent);
             }
         });

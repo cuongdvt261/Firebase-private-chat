@@ -3,6 +3,7 @@ package chatapp.work.cuongdvt.chatapp.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class ListOnlineFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
         lstOnline = new ArrayList<>();
+        Log.v("OnCreate", "OnCreate");
     }
 
     @Override
@@ -56,6 +58,7 @@ public class ListOnlineFragment extends Fragment {
         lstChat = (ListView) view.findViewById(R.id.lsvMenuItem);
 
         ReceiveData();
+        Log.v("OnCreateView", "OnCreateView");
         return view;
     }
 
@@ -73,7 +76,7 @@ public class ListOnlineFragment extends Fragment {
 
     public void GetUpdate(DataSnapshot ds) {
         lstOnline.clear();
-        if (ds.getKey() == "users") {
+        if (ds.getKey().equals("users")) {
             for (DataSnapshot data :
                     ds.getChildren()) {
                 UserModel um = data.getValue(UserModel.class);
