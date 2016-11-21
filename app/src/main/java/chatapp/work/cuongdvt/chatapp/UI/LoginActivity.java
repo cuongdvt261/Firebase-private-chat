@@ -23,7 +23,7 @@ import chatapp.work.cuongdvt.chatapp.R;
 public class LoginActivity extends AppCompatActivity {
     private TextInputLayout edtEmail;
     private TextInputLayout edtPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnSignup, btnReset;
     private ProgressBar progBar;
     private DatabaseReference mData;
 
@@ -35,15 +35,29 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
+//        if (auth.getCurrentUser() != null) {
+//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//            finish();
+//        }
 
         setContentView(R.layout.activity_login);
 
         // Init Component
         Init();
+
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+            }
+        });
+
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,5 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = (TextInputLayout) findViewById(R.id.passwordWrapper);
         btnLogin = (Button) findViewById(R.id.btn);
         progBar = (ProgressBar) findViewById(R.id.progressBar);
+        btnSignup = (Button) findViewById(R.id.btn_signup);
+        btnReset = (Button) findViewById(R.id.btn_reset_password);
     }
 }

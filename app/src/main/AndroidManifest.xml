@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".UI.MainActivity" />
         <activity android:name=".UI.ChatContent" />
+        <activity android:name=".UI.SignupActivity" />
+        <activity android:name=".UI.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>
