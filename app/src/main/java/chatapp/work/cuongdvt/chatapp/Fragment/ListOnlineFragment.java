@@ -1,4 +1,4 @@
-package chatapp.work.cuongdvt.chatapp.UI;
+package chatapp.work.cuongdvt.chatapp.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +25,7 @@ import chatapp.work.cuongdvt.chatapp.Adapter.ChatStatusAdapter;
 import chatapp.work.cuongdvt.chatapp.Model.ListOnlineModel;
 import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
+import chatapp.work.cuongdvt.chatapp.UI.ChatContent;
 
 /**
  * Created by cuongdvt on 16/10/2016.

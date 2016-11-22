@@ -18,6 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import chatapp.work.cuongdvt.chatapp.Fragment.ChatListFragment;
+import chatapp.work.cuongdvt.chatapp.Fragment.ListOnlineFragment;
+import chatapp.work.cuongdvt.chatapp.Fragment.UserInfoFragment;
 import chatapp.work.cuongdvt.chatapp.Helper.Param;
 import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ChatListFragment(), "Chat");
         adapter.addFragment(new ListOnlineFragment(), "Online");
+        adapter.addFragment(new UserInfoFragment(), "User");
         viewPager.setAdapter(adapter);
     }
 

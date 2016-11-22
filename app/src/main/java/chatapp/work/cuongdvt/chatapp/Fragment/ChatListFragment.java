@@ -1,4 +1,4 @@
-package chatapp.work.cuongdvt.chatapp.UI;
+package chatapp.work.cuongdvt.chatapp.Fragment;
 
 
 import android.content.Intent;
@@ -26,6 +26,7 @@ import chatapp.work.cuongdvt.chatapp.Helper.Param;
 import chatapp.work.cuongdvt.chatapp.Model.ChatListModel;
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
+import chatapp.work.cuongdvt.chatapp.UI.ChatContent;
 
 public class ChatListFragment extends Fragment {
 
