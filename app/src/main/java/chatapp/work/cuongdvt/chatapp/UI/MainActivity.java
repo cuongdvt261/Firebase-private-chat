@@ -1,17 +1,18 @@
 package chatapp.work.cuongdvt.chatapp.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,10 +29,16 @@ import chatapp.work.cuongdvt.chatapp.R;
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FloatingActionButton fabAdd;
 
     private FirebaseAuth auth;
     private DatabaseReference mData;
+
+    private FloatingSearchView mSearchView;
+    private int[] tabIcons = {
+            R.drawable.ic_action_chat,
+            R.drawable.ic_action_online,
+            R.drawable.ic_action_user
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +59,23 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        setupIcons();
 
-        fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
+        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Change to Send Message Screen", Toast.LENGTH_LONG).show();
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
             }
-        });
+        };
+
+        mSearchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         mData.child("users")
                 .child(auth.getCurrentUser().getUid())
@@ -78,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ChatListFragment(), "Chat");
-        adapter.addFragment(new ListOnlineFragment(), "Online");
-        adapter.addFragment(new UserInfoFragment(), "User");
+        adapter.addFragment(new ChatListFragment(), "Tin nhắn");
+        adapter.addFragment(new ListOnlineFragment(), "Trực tuyến");
+        adapter.addFragment(new UserInfoFragment(), "Tài khoản");
         viewPager.setAdapter(adapter);
     }
 
@@ -112,5 +124,11 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
 
+    }
+
+    private void setupIcons() {
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 }

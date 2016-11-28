@@ -9,7 +9,7 @@
             <shape android:shape="rectangle">
                 <stroke
                     android:width="10dp"
-                    android:color="#00b863" />
+                    android:color="@color/colorPrimaryDark" />
             </shape>
         </rotate>
     </item>
@@ -22,7 +22,7 @@
             <shape android:shape="rectangle">
                 <stroke
                     android:width="10dp"
-                    android:color="#00b863" />
+                    android:color="@color/colorPrimaryDark" />
             </shape>
         </rotate>
     </item>

@@ -9,30 +9,19 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="Logo Here"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="30sp" />
-        </RelativeLayout>
+        <ImageView
+            android:layout_width="@dimen/logo_w_h"
+            android:layout_height="@dimen/logo_w_h"
+            android:src="@mipmap/logo" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/TextLabel">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/email"
@@ -41,22 +30,50 @@
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:textColor="@color/textColorPrimary" />
+                android:textColor="@android:color/white" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:theme="@style/TextLabel">
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tên tài khoản"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số điện thoại"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
-                android:hint="Password"
+                android:hint="Mật khẩu"
                 android:imeActionId="@+id/login"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
@@ -68,9 +85,10 @@
         <Button
             android:id="@+id/sign_up_button"
             style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@color/colorAccent"
             android:text="Đăng kí"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
@@ -83,7 +101,7 @@
             android:background="@null"
             android:text="Quên mật khẩu ?"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorAccent" />
 
         <!-- Link to Login Screen -->
 

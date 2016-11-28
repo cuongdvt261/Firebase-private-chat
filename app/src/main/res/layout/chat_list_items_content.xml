@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/imgvAvatar"-->
-    <!--android:layout_width="64dp"-->
-    <!--android:layout_height="64dp"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginRight="5dp"-->
-    <!--android:layout_marginTop="5dp" />-->
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/customImg"
         android:layout_width="55dp"
@@ -30,8 +22,8 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/customImg"
         android:text="Short Content ..."
-        android:textAppearance="?android:attr/textAppearance"
-        android:textColor="@color/colorAccent"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold"/>
 
     <TextView
@@ -58,5 +50,5 @@
         android:layout_marginEnd="18dp"
         android:text="Timing"
         android:textSize="10dp"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorPrimaryDark"/>
 </RelativeLayout>

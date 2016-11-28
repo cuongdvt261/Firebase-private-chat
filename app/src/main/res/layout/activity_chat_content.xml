@@ -9,11 +9,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorAccent"
+        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:titleTextColor="@color/textColorPrimary">
+        android:titleTextColor="@color/colorAccent">
 
     </android.support.v7.widget.Toolbar>
 
@@ -51,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:text="@string/btn_send"
             android:textColor="@color/white" />
     </LinearLayout>
