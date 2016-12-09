@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00bcd4</color>
-    <color name="colorPrimaryDark">#0097a7</color>
-    <color name="colorAccent">#f2fe71</color>
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#F57C00</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <color name="actionbar">#3cb879</color>
-    <color name="body_background">#a6a3a3</color>
+    <color name="body_background">#EBEFF0</color>
     <color name="body_background_green">#82e783</color>
     <color name="server_status_bar">#2b2b2b</color>
     <color name="title_gray">#434343</color>
@@ -33,4 +33,10 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
+
+    <color name="search_bg">#AEAEAE</color>
+    <color name="search_text_color">#000000</color>
+
+    <color name="hint_signup_text_color">#D4D5D7</color>
+    <color name="hint_signin_text_color">#BEBFC1</color>
 </resources>

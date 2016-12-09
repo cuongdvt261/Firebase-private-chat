@@ -3,18 +3,27 @@ package chatapp.work.cuongdvt.chatapp.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +36,20 @@ import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
 
 public class MainActivity extends AppCompatActivity {
+    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private DrawerLayout dLayout;
+    private MaterialSearchView searchView;
 
     private FirebaseAuth auth;
     private DatabaseReference mData;
 
-    private FloatingSearchView mSearchView;
     private int[] tabIcons = {
             R.drawable.ic_action_chat,
             R.drawable.ic_action_online,
-            R.drawable.ic_action_user
+            R.drawable.ic_username
     };
 
     @Override
@@ -53,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                         true));
 
         setContentView(R.layout.activity_main);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -71,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mSearchView = (FloatingSearchView) findViewById(R.id.floating_search_view);
+        setNavigationDrawer();
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
     }
 
     @Override
@@ -130,5 +148,60 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+    }
+
+    private void setNavigationDrawer() {
+        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navView = (NavigationView) findViewById(R.id.navigation);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                Fragment frag = null;
+                int itemId = menuItem.getItemId();
+
+                if (itemId == R.id.navigation_item_1) {
+                    Toast.makeText(getApplicationContext(), "Test1", Toast.LENGTH_LONG).show();
+                }
+                else if (itemId == R.id.navigation_item_2) {
+                    Toast.makeText(getApplicationContext(), "Test2", Toast.LENGTH_LONG).show();
+                }
+
+                if (frag != null) {
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    transaction.replace(R.id.frame, frag);
+                    transaction.commit();
+                    dLayout.closeDrawers();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch(itemId) {
+            // Android home
+            case android.R.id.home: {
+                dLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
     }
 }

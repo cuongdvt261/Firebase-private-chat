@@ -1,98 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/body_background"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="chatapp.work.cuongdvt.chatapp.UI.LoginActivity">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:background="@color/colorPrimaryDark"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        app:cardCornerRadius="3dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/logo_w_h"
-            android:layout_height="@dimen/logo_w_h"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="30dp"
-            android:src="@mipmap/logo" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/emailWrapper"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="8">
+
+            <ImageView
+                android:layout_width="@dimen/logo_w_h"
+                android:layout_height="@dimen/logo_w_h"
+                android:layout_gravity="center"
+                android:layout_weight="4"
+                android:src="@mipmap/logo" />
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/edt_input_signin"
+                android:drawableLeft="@drawable/ic_username"
                 android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:textColor="@android:color/white" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/passwordWrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:paddingLeft="15dp"
+                android:textColorHint="@color/hint_signin_text_color" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/edt_input_signin"
+                android:drawableLeft="@drawable/ic_password"
                 android:hint="Mật khẩu"
-                android:imeActionId="@+id/login"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:textColor="@android:color/white" />
+                android:inputType="textVisiblePassword"
+                android:paddingLeft="15dp"
+                android:textColorHint="@color/hint_signin_text_color" />
 
-        </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="Đăng nhập"
+                android:textAllCaps="false"
+                android:textColor="@color/background"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/colorAccent"
-            android:layout_marginTop="16dp"
-            android:text="Đăng nhập"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"/>
+            <Button
+                android:id="@+id/btn_reset_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@null"
+                android:text="Quên mật khẩu"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary" />
 
-        <Button
-            android:id="@+id/btn_reset_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="@null"
-            android:text="Quên mật khẩu ?"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
-
-        <!-- Link to Login Screen -->
-
-        <Button
-            android:id="@+id/btn_signup"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@null"
-            android:text="Đăng kí"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@null"
+                android:text="Chưa có tài khoản? Đăng kí"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -101,4 +106,4 @@
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="20dp"
         android:visibility="gone" />
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
