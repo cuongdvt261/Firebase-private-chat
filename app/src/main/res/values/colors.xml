@@ -39,4 +39,7 @@
 
     <color name="hint_signup_text_color">#D4D5D7</color>
     <color name="hint_signin_text_color">#BEBFC1</color>
+
+    <color name="last_message_show_color">#9FA0A1</color>
+    <color name="chat_item_title">#676868</color>
 </resources>

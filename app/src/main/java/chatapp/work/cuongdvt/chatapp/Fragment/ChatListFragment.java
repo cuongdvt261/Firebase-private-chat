@@ -1,15 +1,14 @@
 package chatapp.work.cuongdvt.chatapp.Fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -22,20 +21,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatListItemAdapter;
+import chatapp.work.cuongdvt.chatapp.Decoration.DividerItemDecoration;
 import chatapp.work.cuongdvt.chatapp.Helper.Param;
 import chatapp.work.cuongdvt.chatapp.Model.ChatListModel;
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
-import chatapp.work.cuongdvt.chatapp.UI.ChatContent;
 
 public class ChatListFragment extends Fragment {
 
-    public ListView lsvItems;
-    private List<ChatListModel> list;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
+    private List<ChatListModel> list;
     private DatabaseReference mData;
     private ChatListItemAdapter adapter;
-
     private ArrayList<String> arrToUser;
 
     public ChatListFragment() {
@@ -53,7 +52,11 @@ public class ChatListFragment extends Fragment {
         View view = inflater.inflate(R.layout.chat_list_items, container, false);
         list = new ArrayList<>();
         arrToUser = new ArrayList<>();
-        lsvItems = (ListView) view.findViewById(R.id.lsvMenuItem);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycleMenuItem);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         ReceiveData();
         return view;
     }
@@ -69,7 +72,7 @@ public class ChatListFragment extends Fragment {
             list.add(new ChatListModel(msg.getSender(), msg.getAvaName(), msg.getMessage(), "08/11/2016"));
             if (list.size() > 0) {
                 adapter = new ChatListItemAdapter(getActivity(), list);
-                lsvItems.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {
                 Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
@@ -78,14 +81,14 @@ public class ChatListFragment extends Fragment {
     }
 
     private void onListClickItem() {
-        lsvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ChatContent.class);
-                //intent.putExtra("TO_USER", arrToUser.get(position));
-                startActivity(intent);
-            }
-        });
+//        lsvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(getActivity(), ChatContent.class);
+//                //intent.putExtra("TO_USER", arrToUser.get(position));
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void ReceiveData() {

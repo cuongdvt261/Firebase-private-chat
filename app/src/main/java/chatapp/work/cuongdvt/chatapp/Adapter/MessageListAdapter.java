@@ -59,10 +59,8 @@ public class MessageListAdapter extends BaseAdapter {
                     null);
         }
 
-        TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
         txtMsg.setText(m.getMessage());
-        lblFrom.setText(m.getSender());
 
         int imgId = this.getMipmapResIdByName(m.getAvaName());
         ImageView imgAva = (ImageView) convertView.findViewById(R.id.imgvAva);

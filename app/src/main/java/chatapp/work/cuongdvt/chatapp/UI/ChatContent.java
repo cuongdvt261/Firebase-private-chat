@@ -158,11 +158,10 @@ public class ChatContent extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(toUser);
+        getSupportActionBar().setSubtitle("Online 12g truoc");
         toolbar.setTitleTextColor(Color.WHITE);
-
         listMsg = (ListView) findViewById(R.id.list_view_messages);
         edtInput = (EditText) findViewById(R.id.inputMsg);
-
         btnSend = (Button) findViewById(R.id.btnSend);
     }
 }

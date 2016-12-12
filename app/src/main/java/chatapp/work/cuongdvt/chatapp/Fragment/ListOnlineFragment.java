@@ -3,12 +3,11 @@ package chatapp.work.cuongdvt.chatapp.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatStatusAdapter;
+import chatapp.work.cuongdvt.chatapp.Decoration.DividerItemDecoration;
+import chatapp.work.cuongdvt.chatapp.Event.RecyclerItemClickListener;
 import chatapp.work.cuongdvt.chatapp.Model.ListOnlineModel;
 import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
@@ -32,7 +33,9 @@ import chatapp.work.cuongdvt.chatapp.UI.ChatContent;
  */
 
 public class ListOnlineFragment extends Fragment {
-    public ListView lstChat;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+
     private FirebaseAuth auth;
     private DatabaseReference mData;
 
@@ -49,30 +52,34 @@ public class ListOnlineFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
         lstOnline = new ArrayList<>();
-        Log.v("OnCreate", "OnCreate");
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.chat_list_items, container, false);
-        lstChat = (ListView) view.findViewById(R.id.lsvMenuItem);
+        final View view = inflater.inflate(R.layout.list_online_content, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycleOnline);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
 
         ReceiveData();
-        Log.v("OnCreateView", "OnCreateView");
         return view;
     }
 
     private void onListClickItem() {
-        lstChat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ListOnlineModel model = (ListOnlineModel) parent.getAdapter().getItem(position);
+            public void onItemClick(View view, int position) {
+                ListOnlineModel model = chatAdapter.getItemByPos(position);
                 Intent intent = new Intent(getActivity(), ChatContent.class);
                 intent.putExtra("TO_USER", model.getUserName());
                 startActivity(intent);
             }
-        });
+        }));
     }
 
     public void GetUpdate(DataSnapshot ds) {
@@ -86,7 +93,7 @@ public class ListOnlineFragment extends Fragment {
                         um.getUsername()));
                 if (lstOnline.size() > 0) {
                     chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
-                    lstChat.setAdapter(chatAdapter);
+                    recyclerView.setAdapter(chatAdapter);
                     chatAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();

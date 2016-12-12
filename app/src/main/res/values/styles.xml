@@ -49,4 +49,14 @@
 
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="Text">
+        <item name="android:paddingLeft">4px</item>
+        <item name="android:paddingBottom">4px</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:shadowColor">@color/hint_signin_text_color</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
 </resources>

@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout dLayout;
     private MaterialSearchView searchView;
 
@@ -75,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        setupIcons();
 
         FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -144,12 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setupIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-    }
-
     private void setNavigationDrawer() {
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navView = (NavigationView) findViewById(R.id.navigation);
@@ -162,8 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (itemId == R.id.navigation_item_1) {
                     Toast.makeText(getApplicationContext(), "Test1", Toast.LENGTH_LONG).show();
-                }
-                else if (itemId == R.id.navigation_item_2) {
+                } else if (itemId == R.id.navigation_item_2) {
                     Toast.makeText(getApplicationContext(), "Test2", Toast.LENGTH_LONG).show();
                 }
 
@@ -185,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        switch(itemId) {
+        switch (itemId) {
             // Android home
             case android.R.id.home: {
                 dLayout.openDrawer(GravityCompat.START);

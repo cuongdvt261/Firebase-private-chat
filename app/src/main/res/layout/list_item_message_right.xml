@@ -2,61 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="right"
-    android:orientation="vertical"
-    android:paddingBottom="5dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/lblMsgFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:textColor="#777777"
-        android:textSize="12dp"
-        android:textStyle="italic" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:weightSum="6">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:weightSum="1"></RelativeLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgvAva"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:padding="7dp"></de.hdodenhof.circleimageview.CircleImageView>
+        <RelativeLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center_vertical|right">
 
-        <TextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/triangle_msg_you"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="2dp"
-            android:textColor="#ffffff"
-            android:textSize="16dp"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/imgvAva" />
+            <TextView
+                android:id="@+id/txtMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_msg_you"
+                android:fontFamily="sans-serif"
+                android:gravity="right"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="aaaaaaaaa"
+                android:textColor="@android:color/black"
+                android:textSize="16dp" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/txtMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_msg_you"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:textColor="#ffffff"
-            android:textSize="16dp"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/textView27" />
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal">
 
-    </RelativeLayout>
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgvAva"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>
