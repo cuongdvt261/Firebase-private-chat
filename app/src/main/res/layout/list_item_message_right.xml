@@ -46,8 +46,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgvAva"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

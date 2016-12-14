@@ -22,7 +22,7 @@ import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatListItemAdapter;
 import chatapp.work.cuongdvt.chatapp.Decoration.DividerItemDecoration;
-import chatapp.work.cuongdvt.chatapp.Helper.Param;
+import chatapp.work.cuongdvt.chatapp.Helper.Helper;
 import chatapp.work.cuongdvt.chatapp.Model.ChatListModel;
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
@@ -37,9 +37,6 @@ public class ChatListFragment extends Fragment {
     private ChatListItemAdapter adapter;
     private ArrayList<String> arrToUser;
 
-    public ChatListFragment() {
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,24 +49,31 @@ public class ChatListFragment extends Fragment {
         View view = inflater.inflate(R.layout.chat_list_items, container, false);
         list = new ArrayList<>();
         arrToUser = new ArrayList<>();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleMenuItem);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        InitComponent(view);
+        InitRecyclerView(recyclerView);
         ReceiveData();
         return view;
     }
 
+    public void InitComponent(View view) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycleMenuItem);
+    }
+
+    public void InitRecyclerView(RecyclerView recyclerView) {
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+    }
+
     private void GetData(DataSnapshot ds) {
         Message msg = new Message();
-        if (ds.getKey().split("_")[0].toString().equals(Param.getInstance().usernameOfEmail())) {
-            list.clear();
+        if (ds.getKey().split("_")[0].toString().equals(Helper.getInstance().usernameOfEmail())) {
             for (DataSnapshot data :
                     ds.getChildren()) {
                 msg = data.getValue(Message.class);
             }
-            list.add(new ChatListModel(msg.getSender(), msg.getAvaName(), msg.getMessage(), "08/11/2016"));
+            list.add(new ChatListModel(ds.getKey().split("_")[1].toString(), msg.getAvaName(), msg.getMessage(), "08/11/2016"));
             if (list.size() > 0) {
                 adapter = new ChatListItemAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);

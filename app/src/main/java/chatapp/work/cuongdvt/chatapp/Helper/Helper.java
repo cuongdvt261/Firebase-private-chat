@@ -8,18 +8,18 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by cuongdvt on 30/10/2016.
  */
 
-public class Param {
-    private static Param _instance;
+public class Helper {
+    private static Helper _instance;
     private DatabaseReference mData;
     private FirebaseAuth mAuth;
 
-    public Param() {
+    public Helper() {
         mData = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public static Param getInstance() {
-        if (_instance == null) _instance = new Param();
+    public static Helper getInstance() {
+        if (_instance == null) _instance = new Helper();
         return _instance;
     }
 

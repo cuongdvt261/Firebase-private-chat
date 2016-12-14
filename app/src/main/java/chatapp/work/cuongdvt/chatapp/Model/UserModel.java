@@ -1,13 +1,11 @@
 package chatapp.work.cuongdvt.chatapp.Model;
 
-/**
- * Created by cuong on 06-Nov-16.
- */
-
 public class UserModel {
     private String id;
     private String username;
     private boolean isOnline;
+    private String avaUrl;
+    private String groups;
 
     public boolean isOnline() {
         return isOnline;
@@ -20,10 +18,10 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String username, String id, boolean isOnline) {
-        this.username = username;
-        this.id = id;
-        this.isOnline = isOnline;
+    public UserModel(String _id, String _username, boolean _isOnline) {
+        this.id = _id;
+        this.username = _username;
+        this.isOnline = _isOnline;
     }
 
     public String getId() {
@@ -40,6 +38,22 @@ public class UserModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getAvaUrl() {
+        return avaUrl;
+    }
+
+    public void setAvaUrl(String avaUrl) {
+        this.avaUrl = avaUrl;
+    }
+
+    public String getGroups() {
+        return groups;
+    }
+
+    public void setGroups(String groups) {
+        this.groups = groups;
     }
 
 }

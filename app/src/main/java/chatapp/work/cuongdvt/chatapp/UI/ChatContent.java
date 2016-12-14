@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.MessageListAdapter;
-import chatapp.work.cuongdvt.chatapp.Helper.Param;
+import chatapp.work.cuongdvt.chatapp.Helper.Helper;
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
 
@@ -52,7 +52,7 @@ public class ChatContent extends AppCompatActivity {
         if (extras == null) return;
 
         toUser = extras.getString("TO_USER");
-        fromUser = Param.getInstance().usernameOfEmail();
+        fromUser = Helper.getInstance().usernameOfEmail();
 
         lstMessages = new ArrayList<>();
 

@@ -28,10 +28,6 @@ import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
 import chatapp.work.cuongdvt.chatapp.UI.ChatContent;
 
-/**
- * Created by cuongdvt on 16/10/2016.
- */
-
 public class ListOnlineFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;

@@ -30,11 +30,13 @@ import java.util.List;
 import chatapp.work.cuongdvt.chatapp.Fragment.ChatListFragment;
 import chatapp.work.cuongdvt.chatapp.Fragment.ListOnlineFragment;
 import chatapp.work.cuongdvt.chatapp.Fragment.UserInfoFragment;
-import chatapp.work.cuongdvt.chatapp.Helper.Param;
+import chatapp.work.cuongdvt.chatapp.Helper.Define;
+import chatapp.work.cuongdvt.chatapp.Helper.Helper;
 import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
 
 public class MainActivity extends AppCompatActivity {
+    //region Define
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -43,36 +45,20 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private DatabaseReference mData;
+    //endregion
 
-    private int[] tabIcons = {
-            R.drawable.ic_action_chat,
-            R.drawable.ic_action_online,
-            R.drawable.ic_username
-    };
-
+    //region Event
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        auth = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance().getReference();
-        mData.child("users")
-                .child(auth.getCurrentUser().getUid())
-                .setValue(new UserModel(Param.getInstance().usernameOfEmail(),
-                        auth.getCurrentUser().getUid(),
-                        true));
-
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        InitFirebase();
+        InitComponent();
+        InitToolbar();
+        InitViewPage();
+        SetNavigationDrawer();
+        QueryData();
 
         FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -83,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        setNavigationDrawer();
-
-        searchView = (MaterialSearchView) findViewById(R.id.search_view);
     }
 
     @Override
@@ -99,15 +81,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+            // Android home
+            case android.R.id.home: {
+                dLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+        }
+        return true;
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+        return true;
+    }
+    //endregion
+
+    //region Method
+    public void InitComponent() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+    }
+
+    public void InitToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void InitViewPage() {
+        SetupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void InitFirebase() {
+        auth = FirebaseAuth.getInstance();
+        mData = FirebaseDatabase.getInstance().getReference();
+    }
+
+    private void SetupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ChatListFragment(), "Tin nhắn");
-        adapter.addFragment(new ListOnlineFragment(), "Trực tuyến");
-        adapter.addFragment(new UserInfoFragment(), "Tài khoản");
+        adapter.addFragment(new ChatListFragment(), Define.FRAGMENT_FIRST_NAME);
+        adapter.addFragment(new ListOnlineFragment(), Define.FRAGMENT_SECOND_NAME);
+        adapter.addFragment(new UserInfoFragment(), Define.FRAGMENT_THIRD_NAME);
         viewPager.setAdapter(adapter);
     }
 
@@ -141,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setNavigationDrawer() {
+    private void SetNavigationDrawer() {
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navView = (NavigationView) findViewById(R.id.navigation);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -171,27 +195,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-
-        switch (itemId) {
-            // Android home
-            case android.R.id.home: {
-                dLayout.openDrawer(GravityCompat.START);
-                return true;
-            }
-        }
-        return true;
+    public void QueryData() {
+        mData.child("users")
+                .child(auth.getCurrentUser().getUid())
+                .setValue(new UserModel(auth.getCurrentUser().getUid(),
+                        Helper.getInstance().usernameOfEmail(),
+                        true));
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-
-        return true;
-    }
+    //endregion
 }
