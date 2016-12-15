@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         InitToolbar();
         InitViewPage();
         SetNavigationDrawer();
-        QueryData();
+        //QueryData();
 
         FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void QueryData() {
-        mData.child("users")
+        mData.child(Define.USERS_CHILD)
                 .child(auth.getCurrentUser().getUid())
                 .setValue(new UserModel(auth.getCurrentUser().getUid(),
                         Helper.getInstance().usernameOfEmail(),

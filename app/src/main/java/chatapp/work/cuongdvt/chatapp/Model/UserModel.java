@@ -4,8 +4,8 @@ public class UserModel {
     private String id;
     private String username;
     private boolean isOnline;
-    private String avaUrl;
-    private String groups;
+    private String avatarUrl;
+    private String fullName;
 
     public boolean isOnline() {
         return isOnline;
@@ -24,6 +24,14 @@ public class UserModel {
         this.isOnline = _isOnline;
     }
 
+    public UserModel(String id, String username, boolean isOnline, String avatarUrl, String fullName) {
+        this.id = id;
+        this.username = username;
+        this.isOnline = isOnline;
+        this.avatarUrl = avatarUrl;
+        this.fullName = fullName;
+    }
+
     public String getId() {
         return id;
     }
@@ -40,20 +48,19 @@ public class UserModel {
         this.username = username;
     }
 
-    public String getAvaUrl() {
-        return avaUrl;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvaUrl(String avaUrl) {
-        this.avaUrl = avaUrl;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
-    public String getGroups() {
-        return groups;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setGroups(String groups) {
-        this.groups = groups;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
-
 }

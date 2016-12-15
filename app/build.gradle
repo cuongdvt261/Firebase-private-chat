@@ -36,5 +36,6 @@ dependencies {
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.google.firebase:firebase-storage:9.8.0'
 }
 apply plugin: 'com.google.gms.google-services'

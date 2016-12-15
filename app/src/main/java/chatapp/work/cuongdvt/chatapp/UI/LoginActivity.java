@@ -1,14 +1,15 @@
 package chatapp.work.cuongdvt.chatapp.UI;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,89 +19,130 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import chatapp.work.cuongdvt.chatapp.Helper.Define;
 import chatapp.work.cuongdvt.chatapp.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    //region Variable
     private EditText edtEmail, edtPassword;
     private Button btnLogin, btnSignup, btnReset;
-    private ProgressBar progBar;
     private DatabaseReference mData;
 
     private FirebaseAuth auth;
+    //endregion
 
+    //region Event
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         auth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
-        if (auth.getCurrentUser() != null) {
+        checkAuth();
+        setContentView(R.layout.activity_login);
+
+        initComponent();
+
+        btnSignup.setOnClickListener(this);
+        btnReset.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn:
+                if (!isValidate()) {
+                    onLoginFailed();
+                    return;
+                } else {
+                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                            R.style.AppTheme_Dark_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage(Define.LOADING_MESSAGE);
+                    progressDialog.show();
+
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            doLogin(getTextEdt(edtEmail), getTextEdt(edtPassword));
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+                }
+                break;
+            case R.id.btn_signup:
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                break;
+            case R.id.btn_reset_password:
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
+    //endregion
+
+    //region Method
+    public void checkAuth() {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
-
-        setContentView(R.layout.activity_login);
-
-        // Init Component
-        Init();
-
-        btnSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-            }
-        });
-
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
-            }
-        });
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = edtEmail.getText().toString();
-                final String password = edtPassword.getText().toString();
-
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address !", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password !", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                progBar.setVisibility(View.VISIBLE);
-                auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progBar.setVisibility(View.GONE);
-                                if (!task.isSuccessful()) {
-                                    if (password.length() < 6) {
-                                        edtPassword.setError(getString(R.string.minimum_password));
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
-                        });
-            }
-        });
     }
 
-    private void Init() {
+    public void initComponent() {
         edtEmail = (EditText) findViewById(R.id.email);
         edtPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.btn);
-        progBar = (ProgressBar) findViewById(R.id.progressBar);
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
     }
+
+    public boolean isValidate() {
+        boolean valid = true;
+        if (TextUtils.isEmpty(getTextEdt(edtEmail)) ||
+                !Patterns.EMAIL_ADDRESS.matcher(getTextEdt(edtEmail)).matches()) {
+            edtEmail.setError(Define.INPUT_EMAIL_ERROR);
+            valid = false;
+        } else {
+            edtEmail.setError(null);
+        }
+        if (TextUtils.isEmpty(getTextEdt(edtPassword))
+                || getTextEdt(edtPassword).length() < 6) {
+            edtPassword.setError(Define.INPUT_PASSWORD_ERROR);
+            valid = false;
+        } else {
+            edtPassword.setError(null);
+        }
+        return valid;
+    }
+
+    public String getTextEdt(EditText edt) {
+        return edt.getText().toString().trim();
+    }
+
+    public void doLogin(String email, String password) {
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            onLoginFailed();
+                        } else {
+                            onLoginSuccess();
+                        }
+                    }
+                });
+    }
+
+    public void onLoginSuccess() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onLoginFailed() {
+        Toast.makeText(getApplicationContext(), Define.LOGIN_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
+    }
+    //endregion
 }
