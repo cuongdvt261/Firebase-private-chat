@@ -1,6 +1,7 @@
 package chatapp.work.cuongdvt.chatapp.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,10 +23,12 @@ import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatListItemAdapter;
 import chatapp.work.cuongdvt.chatapp.Decoration.DividerItemDecoration;
+import chatapp.work.cuongdvt.chatapp.Event.RecyclerItemClickListener;
 import chatapp.work.cuongdvt.chatapp.Helper.Helper;
 import chatapp.work.cuongdvt.chatapp.Model.ChatListModel;
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
+import chatapp.work.cuongdvt.chatapp.UI.ChatContent;
 
 public class ChatListFragment extends Fragment {
 
@@ -85,14 +88,15 @@ public class ChatListFragment extends Fragment {
     }
 
     private void onListClickItem() {
-//        lsvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getActivity(), ChatContent.class);
-//                //intent.putExtra("TO_USER", arrToUser.get(position));
-//                startActivity(intent);
-//            }
-//        });
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ChatListModel model = list.get(position);
+                Intent intent = new Intent(getActivity(), ChatContent.class);
+                intent.putExtra("TO_USER", model.getSender());
+                startActivity(intent);
+            }
+        }));
     }
 
     private void ReceiveData() {
