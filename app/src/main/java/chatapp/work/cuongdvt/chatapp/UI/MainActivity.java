@@ -31,8 +31,6 @@ import chatapp.work.cuongdvt.chatapp.Fragment.ChatListFragment;
 import chatapp.work.cuongdvt.chatapp.Fragment.ListOnlineFragment;
 import chatapp.work.cuongdvt.chatapp.Fragment.UserInfoFragment;
 import chatapp.work.cuongdvt.chatapp.Helper.Define;
-import chatapp.work.cuongdvt.chatapp.Helper.Helper;
-import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         InitToolbar();
         InitViewPage();
         SetNavigationDrawer();
-        //QueryData();
+        QueryData();
 
         FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -74,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mData.child("users")
+        mData.child(Define.USERS_CHILD)
                 .child(auth.getCurrentUser().getUid())
-                .child("online")
+                .child(Define.USERS_ONLINE_CHILD)
                 .setValue(false);
     }
 
@@ -198,9 +196,8 @@ public class MainActivity extends AppCompatActivity {
     public void QueryData() {
         mData.child(Define.USERS_CHILD)
                 .child(auth.getCurrentUser().getUid())
-                .setValue(new UserModel(auth.getCurrentUser().getUid(),
-                        Helper.getInstance().usernameOfEmail(),
-                        true));
+                .child(Define.USERS_ONLINE_CHILD)
+                .setValue(true);
     }
     //endregion
 }

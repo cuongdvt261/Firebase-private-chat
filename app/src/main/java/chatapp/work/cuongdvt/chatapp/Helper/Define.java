@@ -7,6 +7,7 @@ package chatapp.work.cuongdvt.chatapp.Helper;
 public class Define {
     // FIREBASE_CHILD_NAME
     public static final String USERS_CHILD = "users";
+    public static final String USERS_ONLINE_CHILD = "online";
     public static final String MESSAGES_CHILD = "messages";
 
     // FRAGMENT_NAME
