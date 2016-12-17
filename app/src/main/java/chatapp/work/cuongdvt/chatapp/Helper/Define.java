@@ -40,4 +40,5 @@ public class Define {
     // INTENT_NAME
     public static final String INTENT_GET_USERNAME = "TO_USERNAME";
     public static final String INTENT_GET_USER_AVATAR = "TO_USER_AVATAR";
+    public static final String INTENT_GET_BITMAP = "data";
 }

@@ -18,12 +18,6 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String _id, String _username, boolean _isOnline) {
-        this.id = _id;
-        this.username = _username;
-        this.isOnline = _isOnline;
-    }
-
     public UserModel(String id, String username, boolean isOnline, String avatarUrl, String fullName) {
         this.id = id;
         this.username = username;

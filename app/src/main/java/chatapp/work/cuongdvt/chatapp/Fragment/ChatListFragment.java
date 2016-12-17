@@ -99,7 +99,7 @@ public class ChatListFragment extends Fragment {
     }
 
     private void ReceiveData() {
-        mData.child("messages").addChildEventListener(new ChildEventListener() {
+        mData.child(Define.MESSAGES_CHILD).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 GetData(dataSnapshot);
