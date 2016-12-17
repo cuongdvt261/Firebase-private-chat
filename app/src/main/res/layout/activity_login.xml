@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/body_background"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context="chatapp.work.cuongdvt.chatapp.UI.LoginActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/body_background"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              tools:context="chatapp.work.cuongdvt.chatapp.UI.LoginActivity">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_login"
@@ -32,7 +32,7 @@
                 android:layout_height="@dimen/logo_w_h"
                 android:layout_gravity="center"
                 android:layout_weight="4"
-                android:src="@mipmap/logo" />
+                android:src="@mipmap/logo"/>
 
             <EditText
                 android:id="@+id/email"
@@ -46,7 +46,7 @@
                 android:drawableLeft="@drawable/ic_username"
                 android:hint="Email"
                 android:paddingLeft="15dp"
-                android:textColorHint="@color/hint_signin_text_color" />
+                android:textColorHint="@color/hint_signin_text_color"/>
 
             <EditText
                 android:id="@+id/password"
@@ -62,7 +62,7 @@
                 android:hint="Mật khẩu"
                 android:inputType="textVisiblePassword"
                 android:paddingLeft="15dp"
-                android:textColorHint="@color/hint_signin_text_color" />
+                android:textColorHint="@color/hint_signin_text_color"/>
 
             <Button
                 android:id="@+id/btn"
@@ -76,7 +76,7 @@
                 android:text="Đăng nhập"
                 android:textAllCaps="false"
                 android:textColor="@color/background"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btn_reset_password"
@@ -86,7 +86,7 @@
                 android:background="@null"
                 android:text="Quên mật khẩu"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorPrimary"/>
 
             <Button
                 android:id="@+id/btn_signup"
@@ -95,7 +95,7 @@
                 android:layout_weight="0.5"
                 android:background="@null"
                 android:text="Chưa có tài khoản? Đăng kí"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -105,5 +105,5 @@
         android:layout_height="30dp"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="20dp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </LinearLayout>

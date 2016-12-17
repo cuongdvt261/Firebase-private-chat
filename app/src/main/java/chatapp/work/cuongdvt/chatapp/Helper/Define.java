@@ -34,6 +34,8 @@ public class Define {
 
     // STRING_MESSAGE
     public static final String LOADING_MESSAGE = "Đang xử lý";
+    public static final String SEND_MAIL_SUCCESS = "Tin nhắn đã được gửi !";
+    public static final String SEND_MAIL_FAILED = "Gửi tin nhắn không thành công !";
 
     // INTENT_NAME
     public static final String INTENT_GET_USERNAME = "TO_USERNAME";

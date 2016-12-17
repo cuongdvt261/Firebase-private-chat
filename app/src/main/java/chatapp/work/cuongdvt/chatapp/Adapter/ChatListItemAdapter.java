@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Model.ChatListModel;
@@ -55,19 +57,12 @@ public class ChatListItemAdapter extends RecyclerView.Adapter<ChatListItemAdapte
         holder.txtSender.setText(lstContent.get(position).getSender());
         holder.txtShortContent.setText(lstContent.get(position).getContent());
         holder.txtTiming.setText(lstContent.get(position).getTiming());
-        int imgId = this.getMipmapResIdByName(lstContent.get(position).getAvaName());
-        holder.imgAva.setImageResource(imgId);
+        Picasso.with(context).load(lstContent.get(position).getAvaName()).into(holder.imgAva);
     }
 
     @Override
     public int getItemCount() {
         return lstContent.size();
-    }
-
-    public int getMipmapResIdByName(String resName) {
-        String pkgName = context.getPackageName();
-        int resID = context.getResources().getIdentifier(resName, "mipmap", pkgName);
-        return resID;
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {

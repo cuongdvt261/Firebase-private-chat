@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private DatabaseReference mData;
 
     private FirebaseAuth auth;
+
+    private ProgressDialog progressDialog;
     //endregion
 
     //region Event
@@ -55,19 +57,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     onLoginFailed();
                     return;
                 } else {
-                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                            R.style.AppTheme_Dark_Dialog);
                     progressDialog.setIndeterminate(true);
                     progressDialog.setMessage(Define.LOADING_MESSAGE);
                     progressDialog.show();
-
-                    new android.os.Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            doLogin(getTextEdt(edtEmail), getTextEdt(edtPassword));
-                            progressDialog.dismiss();
-                        }
-                    }, 3000);
+                    doLogin(getTextEdt(edtEmail), getTextEdt(edtPassword));
                 }
                 break;
             case R.id.btn_signup:
@@ -96,6 +89,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = (Button) findViewById(R.id.btn);
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
+
+        progressDialog = new ProgressDialog(LoginActivity.this,
+                R.style.AppTheme_Dark_Dialog);
     }
 
     public boolean isValidate() {
@@ -130,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             onLoginFailed();
                         } else {
                             onLoginSuccess();
+                            progressDialog.dismiss();
                         }
                     }
                 });
