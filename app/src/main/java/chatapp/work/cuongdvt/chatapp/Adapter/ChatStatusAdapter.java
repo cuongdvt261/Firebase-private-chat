@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Model.ListOnlineModel;
@@ -53,10 +55,9 @@ public class ChatStatusAdapter extends RecyclerView.Adapter<ChatStatusAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.userName.setText(lstOnline.get(position).getUserName());
-        int imgAvaOnline = this.getMipmapResIdByName(lstOnline.get(position).getAvaName());
         int imgStatus = this.getMipmapResIdByName(lstOnline.get(position).getStatusName());
-        holder.avaName.setImageResource(imgAvaOnline);
         holder.statusName.setImageResource(imgStatus);
+        Picasso.with(context).load(lstOnline.get(position).getAvaName()).into(holder.avaName);
     }
 
     @Override

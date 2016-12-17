@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.MessageListAdapter;
-import chatapp.work.cuongdvt.chatapp.Helper.Helper;
+import chatapp.work.cuongdvt.chatapp.Helper.DataHelper;
+import chatapp.work.cuongdvt.chatapp.Helper.Define;
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
 
@@ -37,8 +39,9 @@ public class ChatContent extends AppCompatActivity {
     private MessageListAdapter adapter;
     private ArrayList<Message> lstMessages;
 
-    private String toUser = "";
-    private String fromUser = "";
+    private String toUsername = null;
+    private String fromUser = null;
+    private String toUserAvatar = null;
 
     private DatabaseReference mDatabase;
 
@@ -51,8 +54,9 @@ public class ChatContent extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras == null) return;
 
-        toUser = extras.getString("TO_USER");
-        fromUser = Helper.getInstance().usernameOfEmail();
+        toUsername = extras.getString(Define.INTENT_GET_USERNAME);
+        toUserAvatar = extras.getString(Define.INTENT_GET_USER_AVATAR);
+        fromUser = DataHelper.getInstance().usernameOfEmail();
 
         lstMessages = new ArrayList<>();
 
@@ -89,22 +93,10 @@ public class ChatContent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(edtInput.getText().toString())) {
-                    mDatabase
-                            .child("messages")
-                            .child(fromUser + "_" + toUser)
-                            .push()
-                            .setValue(new Message(edtInput.getText().toString(),
-                                    true,
-                                    fromUser,
-                                    "ava_1"));
-                    mDatabase
-                            .child("messages")
-                            .child(toUser + "_" + fromUser)
-                            .push()
-                            .setValue(new Message(edtInput.getText().toString(),
-                                    false,
-                                    fromUser,
-                                    "ava_1"));
+                    String msg = edtInput.getText().toString();
+                    String url = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
+                    DataHelper.getInstance().setMessageFrom(fromUser, toUsername, url, msg, true);
+                    DataHelper.getInstance().setMessageFrom(toUsername, fromUser, url, msg, false);
                     edtInput.setText("");
                 }
             }
@@ -112,10 +104,10 @@ public class ChatContent extends AppCompatActivity {
     }
 
     public void UpdateData(DataSnapshot ds) {
-        lstMessages.add(new Message(ds.child("message").getValue().toString(),
+        lstMessages.add(new Message(ds.child(Define.MESAGE_NODE).getValue().toString(),
                 Boolean.valueOf(ds.child("isFromYou").getValue().toString()),
                 ds.child("sender").getValue().toString(),
-                "ava_1"));
+                ds.child("avaName").getValue().toString()));
         if (lstMessages.size() > 0) {
             adapter = new MessageListAdapter(getApplicationContext(), lstMessages);
             listMsg.setAdapter(adapter);
@@ -125,7 +117,7 @@ public class ChatContent extends AppCompatActivity {
     }
 
     public void ReceiveData() {
-        mDatabase.child("messages").child(fromUser + "_" + toUser).addChildEventListener(new ChildEventListener() {
+        mDatabase.child("messages").child(fromUser + "_" + toUsername).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 UpdateData(dataSnapshot);
@@ -157,7 +149,7 @@ public class ChatContent extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(toUser);
+        getSupportActionBar().setTitle(toUsername);
         getSupportActionBar().setSubtitle("Online 12g truoc");
         toolbar.setTitleTextColor(Color.WHITE);
         listMsg = (ListView) findViewById(R.id.list_view_messages);

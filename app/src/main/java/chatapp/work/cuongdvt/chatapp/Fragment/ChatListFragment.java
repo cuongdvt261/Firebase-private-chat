@@ -24,7 +24,8 @@ import java.util.List;
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatListItemAdapter;
 import chatapp.work.cuongdvt.chatapp.Decoration.DividerItemDecoration;
 import chatapp.work.cuongdvt.chatapp.Event.RecyclerItemClickListener;
-import chatapp.work.cuongdvt.chatapp.Helper.Helper;
+import chatapp.work.cuongdvt.chatapp.Helper.DataHelper;
+import chatapp.work.cuongdvt.chatapp.Helper.Define;
 import chatapp.work.cuongdvt.chatapp.Model.ChatListModel;
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 import chatapp.work.cuongdvt.chatapp.R;
@@ -38,7 +39,6 @@ public class ChatListFragment extends Fragment {
     private List<ChatListModel> list;
     private DatabaseReference mData;
     private ChatListItemAdapter adapter;
-    private ArrayList<String> arrToUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +51,6 @@ public class ChatListFragment extends Fragment {
         mData = FirebaseDatabase.getInstance().getReference();
         View view = inflater.inflate(R.layout.chat_list_items, container, false);
         list = new ArrayList<>();
-        arrToUser = new ArrayList<>();
         InitComponent(view);
         InitRecyclerView(recyclerView);
         ReceiveData();
@@ -71,7 +70,7 @@ public class ChatListFragment extends Fragment {
 
     private void GetData(DataSnapshot ds) {
         Message msg = new Message();
-        if (ds.getKey().split("_")[0].toString().equals(Helper.getInstance().usernameOfEmail())) {
+        if (ds.getKey().split("_")[0].toString().equals(DataHelper.getInstance().usernameOfEmail())) {
             for (DataSnapshot data :
                     ds.getChildren()) {
                 msg = data.getValue(Message.class);
@@ -93,7 +92,7 @@ public class ChatListFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 ChatListModel model = list.get(position);
                 Intent intent = new Intent(getActivity(), ChatContent.class);
-                intent.putExtra("TO_USER", model.getSender());
+                intent.putExtra(Define.INTENT_GET_USERNAME, model.getSender());
                 startActivity(intent);
             }
         }));

@@ -18,8 +18,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import chatapp.work.cuongdvt.chatapp.Helper.DataHelper;
 import chatapp.work.cuongdvt.chatapp.Helper.Define;
 import chatapp.work.cuongdvt.chatapp.Helper.Permission;
 import chatapp.work.cuongdvt.chatapp.Model.UserModel;
@@ -30,6 +32,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private EditText edtEmail, edtFullname, edtUsername, edtPassword, edtPassConfirm;
     private Button btnUploadAva, btnSignUp;
     private Toolbar topToolbar;
+    private ProgressDialog progressDialog;
     //endregion
 
     //region Event
@@ -78,20 +81,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     onSignupFailed();
                     return;
                 }
-                final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                        R.style.AppTheme_Dark_Dialog);
+
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Đang xử lý ...");
                 progressDialog.show();
-
-                new android.os.Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        doLogin(getTextEdt(edtEmail), getTextEdt(edtPassword));
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
-
+                doLogin(getTextEdt(edtEmail), getTextEdt(edtPassword));
                 break;
             default:
                 break;
@@ -119,6 +113,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         btnSignUp = (Button) findViewById(R.id.btn_signup);
 
         topToolbar = (Toolbar) findViewById(R.id.top_toolbar);
+        progressDialog = new ProgressDialog(SignupActivity.this,
+                R.style.AppTheme_Dark_Dialog);
     }
 
     public void InitToolbar() {
@@ -192,9 +188,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         if (!task.isSuccessful()) {
                             onSignupFailed();
                         } else {
-                            //onCreateChildInFirebase();
                             onSignupSuccess();
-                            startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                            DataHelper.getInstance().setAvatarDefault(getTextEdt(edtFullname));
+                            final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                            intent.putExtra("PASS", getTextEdt(edtPassword));
+                            startActivity(intent);
                             finish();
                         }
                     }

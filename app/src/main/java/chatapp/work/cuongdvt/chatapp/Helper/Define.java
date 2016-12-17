@@ -8,7 +8,9 @@ public class Define {
     // FIREBASE_CHILD_NAME
     public static final String USERS_CHILD = "users";
     public static final String USERS_ONLINE_CHILD = "online";
+    public static final String USERS_AVATAR_URL_CHILD = "avatarUrl";
     public static final String MESSAGES_CHILD = "messages";
+    public static final String MESAGE_NODE = "message";
 
     // FRAGMENT_NAME
     public static final String FRAGMENT_FIRST_NAME = "Tin nhắn";
@@ -32,4 +34,8 @@ public class Define {
 
     // STRING_MESSAGE
     public static final String LOADING_MESSAGE = "Đang xử lý";
+
+    // INTENT_NAME
+    public static final String INTENT_GET_USERNAME = "TO_USERNAME";
+    public static final String INTENT_GET_USER_AVATAR = "TO_USER_AVATAR";
 }

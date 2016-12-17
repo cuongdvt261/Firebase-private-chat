@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Model.Message;
@@ -62,9 +64,8 @@ public class MessageListAdapter extends BaseAdapter {
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
         txtMsg.setText(m.getMessage());
 
-        int imgId = this.getMipmapResIdByName(m.getAvaName());
         ImageView imgAva = (ImageView) convertView.findViewById(R.id.imgvAva);
-        imgAva.setImageResource(imgId);
+        Picasso.with(context).load(m.getAvaName()).into(imgAva);
 
         return convertView;
     }

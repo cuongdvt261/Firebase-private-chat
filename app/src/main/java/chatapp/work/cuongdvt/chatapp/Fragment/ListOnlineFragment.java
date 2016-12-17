@@ -23,6 +23,7 @@ import java.util.List;
 import chatapp.work.cuongdvt.chatapp.Adapter.ChatStatusAdapter;
 import chatapp.work.cuongdvt.chatapp.Decoration.DividerItemDecoration;
 import chatapp.work.cuongdvt.chatapp.Event.RecyclerItemClickListener;
+import chatapp.work.cuongdvt.chatapp.Helper.Define;
 import chatapp.work.cuongdvt.chatapp.Model.ListOnlineModel;
 import chatapp.work.cuongdvt.chatapp.Model.UserModel;
 import chatapp.work.cuongdvt.chatapp.R;
@@ -72,7 +73,7 @@ public class ListOnlineFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 ListOnlineModel model = chatAdapter.getItemByPos(position);
                 Intent intent = new Intent(getActivity(), ChatContent.class);
-                intent.putExtra("TO_USER", model.getUserName());
+                intent.putExtra(Define.INTENT_GET_USERNAME, model.getUserName());
                 startActivity(intent);
             }
         }));
@@ -84,7 +85,7 @@ public class ListOnlineFragment extends Fragment {
             for (DataSnapshot data :
                     ds.getChildren()) {
                 UserModel um = data.getValue(UserModel.class);
-                lstOnline.add(new ListOnlineModel("ava_1",
+                lstOnline.add(new ListOnlineModel(um.getAvatarUrl(),
                         um.isOnline() ? "online" : "offline",
                         um.getUsername()));
                 if (lstOnline.size() > 0) {

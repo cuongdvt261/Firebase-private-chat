@@ -1,8 +1,6 @@
 package chatapp.work.cuongdvt.chatapp.UI;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -30,6 +27,7 @@ import java.util.List;
 import chatapp.work.cuongdvt.chatapp.Fragment.ChatListFragment;
 import chatapp.work.cuongdvt.chatapp.Fragment.ListOnlineFragment;
 import chatapp.work.cuongdvt.chatapp.Fragment.UserInfoFragment;
+import chatapp.work.cuongdvt.chatapp.Helper.DataHelper;
 import chatapp.work.cuongdvt.chatapp.Helper.Define;
 import chatapp.work.cuongdvt.chatapp.R;
 
@@ -56,26 +54,22 @@ public class MainActivity extends AppCompatActivity {
         InitToolbar();
         InitViewPage();
         SetNavigationDrawer();
-        QueryData();
 
-        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }
-            }
-        };
+        // Set User is online
+        DataHelper.getInstance().setUserOnline(true);
+
+        //Re-auth firebase
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) return;
+
+        String password = extras.getString("PASS");
+        DataHelper.getInstance().reauthFirebase(auth.getCurrentUser().getEmail(), password);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mData.child(Define.USERS_CHILD)
-                .child(auth.getCurrentUser().getUid())
-                .child(Define.USERS_ONLINE_CHILD)
-                .setValue(false);
+        DataHelper.getInstance().setUserOnline(false);
     }
 
     @Override
@@ -133,36 +127,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    public class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-
-    }
-
     private void SetNavigationDrawer() {
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navView = (NavigationView) findViewById(R.id.navigation);
@@ -193,11 +157,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void QueryData() {
-        mData.child(Define.USERS_CHILD)
-                .child(auth.getCurrentUser().getUid())
-                .child(Define.USERS_ONLINE_CHILD)
-                .setValue(true);
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+
     }
     //endregion
 }
