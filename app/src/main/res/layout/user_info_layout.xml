@@ -19,7 +19,8 @@
             android:id="@+id/img_avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="15dp"/>
 
         <TextView
             android:id="@+id/textview_display_name"

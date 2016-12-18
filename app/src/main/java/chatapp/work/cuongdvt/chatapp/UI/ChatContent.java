@@ -1,5 +1,6 @@
 package chatapp.work.cuongdvt.chatapp.UI;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -75,6 +76,7 @@ public class ChatContent extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                startActivity(new Intent(ChatContent.this, MainActivity.class));
                 finish();
                 break;
         }

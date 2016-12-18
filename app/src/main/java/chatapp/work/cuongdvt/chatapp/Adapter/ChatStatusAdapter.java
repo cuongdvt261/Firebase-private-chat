@@ -45,6 +45,11 @@ public class ChatStatusAdapter extends RecyclerView.Adapter<ChatStatusAdapter.Vi
         return lstOnline.get(position);
     }
 
+    public void clear() {
+        lstOnline.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         layoutInflater = LayoutInflater.from(parent.getContext());

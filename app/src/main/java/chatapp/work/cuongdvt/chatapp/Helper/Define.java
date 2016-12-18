@@ -8,7 +8,9 @@ public class Define {
     // FIREBASE_CHILD_NAME
     public static final String USERS_CHILD = "users";
     public static final String USERS_ONLINE_CHILD = "online";
-    public static final String USERS_AVATAR_URL_CHILD = "avatarUrl";
+    public static final String USERS_AVATAR_URL_NODE = "avatarUrl";
+    public static final String USERS_FULLNAME_NODE = "fullName";
+    public static final String USERS_USERNAME_NODE = "username";
     public static final String MESSAGES_CHILD = "messages";
     public static final String MESAGE_NODE = "message";
 
@@ -21,7 +23,7 @@ public class Define {
     public static final int CAMERA_REQUEST_CODE = 1;
 
     // STORAGE_LINK
-    public static final String STORAGE_NAME = "gs://chatapp-2f48f.appspot.com";
+    public static final String STORAGE_URL = "gs://chatapp-2f48f.appspot.com";
     public static final String NO_AVATAR_IMAGE_LINK = "https://firebasestorage.googleapis.com/v0/b/chatapp-2f48f.appspot.com/o/no_avatar.jpg?alt=media&token=ad8af72a-4d76-49dd-9a99-54e5de41a03c";
 
     // STRING_ERROR
@@ -41,4 +43,11 @@ public class Define {
     public static final String INTENT_GET_USERNAME = "TO_USERNAME";
     public static final String INTENT_GET_USER_AVATAR = "TO_USER_AVATAR";
     public static final String INTENT_GET_BITMAP = "data";
+
+    // IMAGE_PREFIX
+    public static final String AVATAR_PREFIX = "AVATAR_";
+
+    // ICON_NAME
+    public static final String IC_ONLINE = "online";
+    public static final String IC_OFFLINE = "offline";
 }

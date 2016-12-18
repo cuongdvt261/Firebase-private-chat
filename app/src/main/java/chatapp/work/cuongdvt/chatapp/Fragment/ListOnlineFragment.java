@@ -49,7 +49,6 @@ public class ListOnlineFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
         lstOnline = new ArrayList<>();
-
     }
 
     @Override
@@ -57,14 +56,21 @@ public class ListOnlineFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.list_online_content, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleOnline);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
-
+        initComponent(view);
+        initRecyclerView(recyclerView);
         ReceiveData();
         return view;
+    }
+
+    public void initComponent(View view) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycleOnline);
+        layoutManager = new LinearLayoutManager(getActivity());
+    }
+
+    public void initRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
     }
 
     private void onListClickItem() {
@@ -80,27 +86,22 @@ public class ListOnlineFragment extends Fragment {
     }
 
     public void GetUpdate(DataSnapshot ds) {
-        lstOnline.clear();
-        if (ds.getKey().equals("users")) {
-            for (DataSnapshot data :
-                    ds.getChildren()) {
-                UserModel um = data.getValue(UserModel.class);
-                lstOnline.add(new ListOnlineModel(um.getAvatarUrl(),
-                        um.isOnline() ? "online" : "offline",
-                        um.getUsername()));
-                if (lstOnline.size() > 0) {
-                    chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
-                    recyclerView.setAdapter(chatAdapter);
-                    chatAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
-                }
-            }
+        UserModel um = ds.getValue(UserModel.class);
+        lstOnline.add(new ListOnlineModel(um.getAvatarUrl(),
+                um.isOnline() ? Define.IC_ONLINE : Define.IC_OFFLINE,
+                um.getUsername()));
+        if (lstOnline.size() > 0) {
+            chatAdapter = new ChatStatusAdapter(lstOnline, getActivity());
+            recyclerView.setAdapter(chatAdapter);
+            chatAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
         }
     }
 
+
     public void ReceiveData() {
-        mData.addChildEventListener(new ChildEventListener() {
+        mData.child(Define.USERS_CHILD).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 GetUpdate(dataSnapshot);

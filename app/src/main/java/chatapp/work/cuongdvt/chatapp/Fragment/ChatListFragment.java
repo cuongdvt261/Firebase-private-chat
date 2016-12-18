@@ -1,6 +1,5 @@
 package chatapp.work.cuongdvt.chatapp.Fragment;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,14 +31,16 @@ import chatapp.work.cuongdvt.chatapp.R;
 import chatapp.work.cuongdvt.chatapp.UI.ChatContent;
 
 public class ChatListFragment extends Fragment {
-
+    // region Param
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
     private List<ChatListModel> list;
     private DatabaseReference mData;
     private ChatListItemAdapter adapter;
+    //endregion
 
+    //region Event
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,9 @@ public class ChatListFragment extends Fragment {
         ReceiveData();
         return view;
     }
+    //endregion
 
+    //region Method
     public void InitComponent(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleMenuItem);
     }
@@ -127,4 +130,5 @@ public class ChatListFragment extends Fragment {
         });
         onListClickItem();
     }
+    //endregion
 }
