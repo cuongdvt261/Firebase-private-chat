@@ -50,4 +50,17 @@ public class Define {
     // ICON_NAME
     public static final String IC_ONLINE = "online";
     public static final String IC_OFFLINE = "offline";
+    public static final String IC_CHANGE_EMAIL = "ic_change_email";
+    public static final String IC_CHANGE_PASS = "ic_change_pass";
+    public static final String IC_RESET_EMAIL = "ic_reset_email";
+    public static final String IC_SIGN_OUT = "ic_logout";
+
+    // TAG_DEBUG
+    public static final String TAG_LIST_NO_DATA = "List";
+
+    // LIST_ITEM_USERINFO_NAME
+    public static final String ITEM_CHANGE_EMAIL = "Thay đổi email";
+    public static final String ITEM_CHANGE_PASS = "Thay đổi mật khẩu";
+    public static final String ITEM_SIGN_OUT = "Đăng xuất";
+    public static final String ITEM_RESET_EMAIL = "Lấy lại Email";
 }

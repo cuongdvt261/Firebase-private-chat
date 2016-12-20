@@ -1,5 +1,6 @@
 package chatapp.work.cuongdvt.chatapp.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,12 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +103,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return;
+        }
+    }
+
     //endregion
 
     //region Method
@@ -136,6 +147,16 @@ public class MainActivity extends AppCompatActivity {
     private void SetNavigationDrawer() {
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navView = (NavigationView) findViewById(R.id.navigation);
+        View v = navView.getHeaderView(0);
+        ImageView imgHeader = (ImageView) v.findViewById(R.id.image_ava_header);
+        TextView txtName = (TextView) v.findViewById(R.id.name_header);
+        TextView txtEmail = (TextView) v.findViewById(R.id.email_header);
+        Picasso.with(getApplicationContext())
+                .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
+                .into(imgHeader);
+        txtName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        txtEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -143,10 +164,16 @@ public class MainActivity extends AppCompatActivity {
                 Fragment frag = null;
                 int itemId = menuItem.getItemId();
 
-                if (itemId == R.id.navigation_item_1) {
-                    Toast.makeText(getApplicationContext(), "Test1", Toast.LENGTH_LONG).show();
-                } else if (itemId == R.id.navigation_item_2) {
-                    Toast.makeText(getApplicationContext(), "Test2", Toast.LENGTH_LONG).show();
+                switch (itemId) {
+                    case R.id.navigation_item_1:
+                        startActivity(new Intent(MainActivity.this, UpdateUserInfoActivity.class));
+                        break;
+                    case R.id.navigation_item_2:
+                        break;
+                    case R.id.navigation_item_3:
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        break;
                 }
 
                 if (frag != null) {
@@ -190,8 +217,6 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-
     }
-
     //endregion
 }

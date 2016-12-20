@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -82,9 +82,10 @@ public class ChatListFragment extends Fragment {
             if (list.size() > 0) {
                 adapter = new ChatListItemAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+                Log.d(Define.TAG_LIST_NO_DATA, "No Data");
             }
         }
     }

@@ -42,6 +42,7 @@ public class ChatContent extends AppCompatActivity {
     private String toUsername = null;
     private String fromUser = null;
     private String toUserAvatar = null;
+    public String str = null;
 
     private DatabaseReference mDatabase;
 
@@ -57,6 +58,7 @@ public class ChatContent extends AppCompatActivity {
         toUsername = extras.getString(Define.INTENT_GET_USERNAME);
         toUserAvatar = extras.getString(Define.INTENT_GET_USER_AVATAR);
         fromUser = DataHelper.getInstance().usernameOfEmail();
+        str = extras.getString("a");
 
         lstMessages = new ArrayList<>();
 
@@ -152,7 +154,7 @@ public class ChatContent extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(toUsername);
-        getSupportActionBar().setSubtitle("Online 12g truoc");
+        getSupportActionBar().setSubtitle(DataHelper.getInstance().getNow());
         toolbar.setTitleTextColor(Color.WHITE);
         listMsg = (ListView) findViewById(R.id.list_view_messages);
         edtInput = (EditText) findViewById(R.id.inputMsg);

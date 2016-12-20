@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -38,6 +38,8 @@ public class ListOnlineFragment extends Fragment {
 
     private List<ListOnlineModel> lstOnline;
     private ChatStatusAdapter chatAdapter;
+
+    private String state = null;
 
     public ListOnlineFragment() {
 
@@ -80,6 +82,7 @@ public class ListOnlineFragment extends Fragment {
                 ListOnlineModel model = chatAdapter.getItemByPos(position);
                 Intent intent = new Intent(getActivity(), ChatContent.class);
                 intent.putExtra(Define.INTENT_GET_USERNAME, model.getUserName());
+                intent.putExtra("a", model.getStatusName());
                 startActivity(intent);
             }
         }));
@@ -95,8 +98,9 @@ public class ListOnlineFragment extends Fragment {
             recyclerView.setAdapter(chatAdapter);
             chatAdapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+            Log.d(Define.TAG_LIST_NO_DATA, "No Data");
         }
+        state = String.valueOf(um.isOnline());
     }
 
 

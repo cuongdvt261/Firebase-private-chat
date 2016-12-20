@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chatapp.work.cuongdvt.chatapp.Adapter.UserHelperAdapter;
+import chatapp.work.cuongdvt.chatapp.Helper.Define;
 import chatapp.work.cuongdvt.chatapp.Model.UserHelperModel;
 import chatapp.work.cuongdvt.chatapp.R;
 import chatapp.work.cuongdvt.chatapp.UI.LoginActivity;
@@ -58,16 +59,6 @@ public class UserInfoFragment extends Fragment implements AdapterView.OnItemClic
         initRecycleview();
         updateUserInfo();
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                    getActivity().finish();
-                }
-            }
-        };
         listView.setOnItemClickListener(this);
         imgAva.setOnClickListener(this);
         return view;
@@ -86,6 +77,7 @@ public class UserInfoFragment extends Fragment implements AdapterView.OnItemClic
                 break;
             case 3:
                 FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
             default:
                 break;
@@ -104,10 +96,10 @@ public class UserInfoFragment extends Fragment implements AdapterView.OnItemClic
 
     private List<UserHelperModel> getListData() {
         List<UserHelperModel> list = new ArrayList<>();
-        UserHelperModel chaneEmail = new UserHelperModel("ic_change_email", "Thay đổi email");
-        UserHelperModel changePass = new UserHelperModel("ic_change_pass", "Thay đổi mật khẩu");
-        UserHelperModel resetMail = new UserHelperModel("ic_reset_email", "Lấy lại Email");
-        UserHelperModel logout = new UserHelperModel("ic_logout", "Đăng xuất");
+        UserHelperModel chaneEmail = new UserHelperModel(Define.IC_CHANGE_EMAIL, Define.ITEM_CHANGE_EMAIL);
+        UserHelperModel changePass = new UserHelperModel(Define.IC_CHANGE_PASS, Define.ITEM_CHANGE_PASS);
+        UserHelperModel resetMail = new UserHelperModel(Define.IC_RESET_EMAIL, Define.ITEM_RESET_EMAIL);
+        UserHelperModel logout = new UserHelperModel(Define.IC_SIGN_OUT, Define.ITEM_SIGN_OUT);
 
 
         list.add(chaneEmail);

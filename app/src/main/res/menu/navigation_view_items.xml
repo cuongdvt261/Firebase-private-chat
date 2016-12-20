@@ -5,10 +5,14 @@
             android:id="@+id/navigation_item_1"
             android:checked="true"
             android:icon="@drawable/ic_action_chat"
-            android:title="Menu 1" />
+            android:title="Thay đổi thông tin" />
         <item
             android:id="@+id/navigation_item_2"
             android:icon="@drawable/ic_action_online"
-            android:title="Menu 2" />
+            android:title="Giới thiệu" />
+        <item
+            android:id="@+id/navigation_item_3"
+            android:icon="@drawable/ic_action_online"
+            android:title="Đăng xuất" />
     </group>
 </menu>
