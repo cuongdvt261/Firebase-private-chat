@@ -9,16 +9,17 @@ public class Message {
     private boolean isFromYou;
     private String sender;
     private String avaName;
+    private String timing;
 
     public Message() {
     }
 
-    public Message(String message, boolean isFromYou, String sender, String avaName) {
+    public Message(String message, boolean isFromYou, String sender, String avaName, String timing) {
         this.message = message;
         this.isFromYou = isFromYou;
         this.sender = sender;
         this.avaName = avaName;
-
+        this.timing = timing;
     }
 
     public String getMessage() {
@@ -53,4 +54,11 @@ public class Message {
         this.avaName = avaName;
     }
 
+    public String getTiming() {
+        return timing;
+    }
+
+    public void setTiming(String timing) {
+        this.timing = timing;
+    }
 }

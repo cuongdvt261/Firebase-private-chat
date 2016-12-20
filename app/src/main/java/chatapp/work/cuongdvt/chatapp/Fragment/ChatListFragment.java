@@ -78,7 +78,7 @@ public class ChatListFragment extends Fragment {
                     ds.getChildren()) {
                 msg = data.getValue(Message.class);
             }
-            list.add(new ChatListModel(ds.getKey().split("_")[1].toString(), msg.getAvaName(), msg.getMessage(), "08/11/2016"));
+            list.add(new ChatListModel(ds.getKey().split("_")[1].toString(), msg.getAvaName(), msg.getMessage(), msg.getTiming()));
             if (list.size() > 0) {
                 adapter = new ChatListItemAdapter(getActivity(), list);
                 recyclerView.setAdapter(adapter);

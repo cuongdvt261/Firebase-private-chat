@@ -107,7 +107,9 @@ public class ChatContent extends AppCompatActivity {
         lstMessages.add(new Message(ds.child(Define.MESAGE_NODE).getValue().toString(),
                 Boolean.valueOf(ds.child("isFromYou").getValue().toString()),
                 ds.child("sender").getValue().toString(),
-                ds.child("avaName").getValue().toString()));
+                ds.child("avaName").getValue().toString(),
+                ds.child("timing").getValue().toString()
+        ));
         if (lstMessages.size() > 0) {
             adapter = new MessageListAdapter(getApplicationContext(), lstMessages);
             listMsg.setAdapter(adapter);

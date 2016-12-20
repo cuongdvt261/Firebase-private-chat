@@ -63,6 +63,8 @@ public class MessageListAdapter extends BaseAdapter {
 
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
         txtMsg.setText(m.getMessage());
+        TextView txtTimeing = (TextView) convertView.findViewById(R.id.textview_time);
+        txtTimeing.setText(m.getTiming());
 
         ImageView imgAva = (ImageView) convertView.findViewById(R.id.imgvAva);
         Picasso.with(context).load(m.getAvaName()).into(imgAva);

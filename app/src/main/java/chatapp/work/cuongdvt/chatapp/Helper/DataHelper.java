@@ -14,6 +14,9 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import chatapp.work.cuongdvt.chatapp.Model.Message;
 
 public class DataHelper {
@@ -62,7 +65,7 @@ public class DataHelper {
         getMainChild(Define.MESSAGES_CHILD)
                 .child(from + "_" + to)
                 .push()
-                .setValue(new Message(msg, isFrom, from, ava));
+                .setValue(new Message(msg, isFrom, from, ava, getNow()));
     }
 
     public void updateCurrentUserProfile(String displayName, String avatarUrl) {
@@ -95,5 +98,11 @@ public class DataHelper {
                         Log.d("DISPLAY_NAME", getCurrentUser().getDisplayName());
                     }
                 });
+    }
+
+    public String getNow() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        String currentDateandTime = sdf.format(new Date());
+        return currentDateandTime;
     }
 }

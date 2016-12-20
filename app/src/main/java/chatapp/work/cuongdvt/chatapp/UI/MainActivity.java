@@ -93,6 +93,12 @@ public class MainActivity extends AppCompatActivity {
         searchView.setMenuItem(item);
         return true;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     //endregion
 
     //region Method
@@ -186,5 +192,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     //endregion
 }
