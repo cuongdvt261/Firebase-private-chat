@@ -140,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void onLoginFailed() {
         Toast.makeText(getApplicationContext(), Define.LOGIN_ERROR_MESSAGE, Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
     }
     //endregion
 }

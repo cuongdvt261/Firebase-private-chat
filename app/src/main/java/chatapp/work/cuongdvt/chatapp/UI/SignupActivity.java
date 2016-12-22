@@ -178,6 +178,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     public void onSignupFailed() {
         ToastTextLong(Define.SIGNUP_ERROR_MESSAGE);
+        progressDialog.dismiss();
     }
 
     public void doLogin(String email, String password) {

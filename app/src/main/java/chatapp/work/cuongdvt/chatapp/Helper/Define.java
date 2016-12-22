@@ -16,8 +16,8 @@ public class Define {
 
     // FRAGMENT_NAME
     public static final String FRAGMENT_FIRST_NAME = "Tin nhắn";
-    public static final String FRAGMENT_SECOND_NAME = "Trực tuyến";
-    public static final String FRAGMENT_THIRD_NAME = "Tài khoản";
+    public static final String FRAGMENT_SECOND_NAME = "Online";
+    public static final String FRAGMENT_THIRD_NAME = "Cá nhân";
 
     // PERMISSION_CODE
     public static final int CAMERA_REQUEST_CODE = 1;

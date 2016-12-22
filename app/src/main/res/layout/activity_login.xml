@@ -60,7 +60,7 @@
                 android:background="@drawable/edt_input_signin"
                 android:drawableLeft="@drawable/ic_password"
                 android:hint="Mật khẩu"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:paddingLeft="15dp"
                 android:textColorHint="@color/hint_signin_text_color"/>
 

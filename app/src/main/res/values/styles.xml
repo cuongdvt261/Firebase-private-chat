@@ -21,7 +21,7 @@
 
     <style name="MaterialSearchViewStyle">
         <!-- Background for the search bar -->
-        <item name="searchBackground">@color/colorPrimary</item>
+        <item name="searchBackground">@color/colorPrimaryDark</item>
 
         <!-- Change voice icon -->
         <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>

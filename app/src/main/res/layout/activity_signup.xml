@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    tools:context="chatapp.work.cuongdvt.chatapp.UI.SignupActivity">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              tools:context="chatapp.work.cuongdvt.chatapp.UI.SignupActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:text="Đăng kí tài khoản"
                 android:textColor="@color/background"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
         </android.support.v7.widget.Toolbar>
 
         <LinearLayout
@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/background"
-                android:text="Upload avatar" />
+                android:text="Upload avatar"/>
 
             <EditText
                 android:id="@+id/email"
@@ -58,7 +58,7 @@
                 android:drawableLeft="@drawable/ic_email"
                 android:hint="Email"
                 android:paddingLeft="20dp"
-                android:textColorHint="@color/hint_signup_text_color" />
+                android:textColorHint="@color/hint_signup_text_color"/>
 
             <EditText
                 android:id="@+id/fullname"
@@ -73,7 +73,7 @@
                 android:drawableLeft="@drawable/ic_fullname"
                 android:hint="Tên đầy đủ"
                 android:paddingLeft="20dp"
-                android:textColorHint="@color/hint_signup_text_color" />
+                android:textColorHint="@color/hint_signup_text_color"/>
 
             <EditText
                 android:id="@+id/username"
@@ -88,7 +88,7 @@
                 android:drawableLeft="@drawable/ic_username"
                 android:hint="Tên tài khoản"
                 android:paddingLeft="20dp"
-                android:textColorHint="@color/hint_signup_text_color" />
+                android:textColorHint="@color/hint_signup_text_color"/>
 
             <EditText
                 android:id="@+id/password"
@@ -102,9 +102,9 @@
                 android:background="@drawable/edt_input_signup"
                 android:drawableLeft="@drawable/ic_password"
                 android:hint="Mật khẩu"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:paddingLeft="20dp"
-                android:textColorHint="@color/hint_signup_text_color" />
+                android:textColorHint="@color/hint_signup_text_color"/>
 
             <EditText
                 android:id="@+id/password_confirm"
@@ -118,9 +118,9 @@
                 android:background="@drawable/edt_input_signup"
                 android:drawableLeft="@drawable/ic_password"
                 android:hint="Xác nhận mật khẩu"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:paddingLeft="20dp"
-                android:textColorHint="@color/hint_signup_text_color" />
+                android:textColorHint="@color/hint_signup_text_color"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
                 android:text="Đông ý với điều khoản của chúng tôi"
-                android:textSize="15dp" />
+                android:textSize="15dp"/>
 
             <Button
                 android:id="@+id/btn_signup"
@@ -142,7 +142,7 @@
                 android:text="Đăng kí"
                 android:textColor="@android:color/white"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
